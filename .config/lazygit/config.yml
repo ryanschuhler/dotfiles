@@ -1,0 +1,27 @@
+git:
+  pagers:
+    - colorArg: always
+      pager: delta --dark --side-by-side --paging=never --line-numbers
+  autoFetch: false
+gui:
+  sidePanelWidth: 0.2
+  theme:
+    activeBorderColor:
+      - "#7aa2f7"
+      - bold
+    inactiveBorderColor:
+      - "#29a4bd"
+    optionsTextColor:
+      - "#7aa2f7"
+    selectedLineBgColor:
+      - "#2e3c64"
+    selectedRangeBgColor:
+      - "#2e3c64"
+    cherryPickedCommitBgColor:
+      - "#449dab"
+    cherryPickedCommitFgColor:
+      - "#7aa2f7"
+    unstagedChangesColor:
+      - "#f7768e"
+    defaultFgColor:
+      - "#c0caf5"
