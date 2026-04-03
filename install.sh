@@ -9,11 +9,63 @@ BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$CONFIG_DIR"
 mkdir -p "$BACKUP_DIR"
 
-# List of files in home directory
-HOME_FILES=(".bashrc" ".zshrc" ".profile" ".bash_profile")
+# List of files in home directory (strictly Bash)
+HOME_FILES=(".bashrc" ".profile" ".bash_profile")
 
 # List of directories/files in .config
-CONFIG_ITEMS=("btop" "eza" "fastfetch" "fish" "gh" "git" "k9s" "lazydocker" "lazygit" "nvim" "starship.toml" "tmux")
+CONFIG_ITEMS=("bash" "btop" "eza" "fastfetch" "gh" "git" "k9s" "lazydocker" "lazygit" "nvim" "starship.toml" "tmux")
+
+# Binaries to check for
+REQUIRED_BINARIES=(
+    "starship"
+    "btop"
+    "eza"
+    "fastfetch"
+    "gh"
+    "git"
+    "k9s"
+    "lazydocker"
+    "lazygit"
+    "nvim"
+    "tmux"
+    "brew"
+    "k3d"
+    "uv"
+)
+
+# Function to check if a command exists
+check_requirements() {
+    echo "Checking for required programs..."
+    local missing_count=0
+
+    for bin in "${REQUIRED_BINARIES[@]}"; do
+        if ! command -v "$bin" &> /dev/null; then
+            echo "⚠️  Warning: '$bin' is not installed."
+            missing_count=$((missing_count + 1))
+        fi
+    done
+
+    # Special check for ble.sh
+    if [[ ! -s "$HOME/.local/share/blesh/ble.sh" ]]; then
+        echo "⚠️  Warning: 'ble.sh' is not found in ~/.local/share/blesh/"
+        missing_count=$((missing_count + 1))
+    fi
+
+    # Special check for SDKMAN!
+    if [[ ! -d "$HOME/.sdkman" ]]; then
+        echo "⚠️  Warning: 'SDKMAN!' is not found in ~/.sdkman"
+        missing_count=$((missing_count + 1))
+    fi
+
+    if [ $missing_count -gt 0 ]; then
+        echo ""
+        echo "Some programs are missing. You can install most via brew:"
+        echo "brew install starship btop eza fastfetch gh nvim tmux lazygit lazydocker k9s ripgrep fd fzf"
+        echo ""
+    else
+        echo "✅ All required programs found."
+    fi
+}
 
 # Function to symlink files
 link_file() {
@@ -28,6 +80,9 @@ link_file() {
     echo "Linking $src -> $dest"
     ln -s "$src" "$dest"
 }
+
+# Run requirements check
+check_requirements
 
 # Link home files
 for file in "${HOME_FILES[@]}"; do

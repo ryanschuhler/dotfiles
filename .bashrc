@@ -1,9 +1,8 @@
 # If not running interactively, don't do anything (leave this at the top of this file)
 [[ $- != *i* ]] && return
 
-# All the default Omarchy aliases and functions
-# (don't mess with these directly, just overwrite them here!)
-source ~/.local/share/omarchy/default/bash/rc
+# Source our local shell environment
+source "$HOME/.config/bash/rc"
 
 # Add your own exports, aliases, and functions here.
 #
@@ -12,7 +11,8 @@ source ~/.local/share/omarchy/default/bash/rc
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-source /usr/share/blesh/ble.sh
+# Load ble.sh (if installed)
+[[ -s "$HOME/.local/share/blesh/ble.sh" ]] && source "$HOME/.local/share/blesh/ble.sh"
 
 export KUBECONFIG=/home/ry/.config/k3d/cne.yaml
 export ANT_OPTS="-Xmx5000m"

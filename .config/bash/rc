@@ -1,0 +1,21 @@
+# Get the absolute path to this script's directory (the .config/bash directory)
+BASH_CONFIG_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BIN_DIR="$(dirname "$(dirname "$BASH_CONFIG_DIR")")/bin"
+
+# Update PATH to include our repo's local bin (if it exists)
+[[ -d "$BIN_DIR" ]] && export PATH="$BIN_DIR:$PATH"
+
+# Source our core scripts from the local repo
+source "$BASH_CONFIG_DIR/envs"
+source "$BASH_CONFIG_DIR/shell"
+source "$BASH_CONFIG_DIR/aliases"
+source "$BASH_CONFIG_DIR/functions"
+source "$BASH_CONFIG_DIR/init"
+
+# Load local fns
+for f in "$BASH_CONFIG_DIR/fns/"*; do
+  [[ -f "$f" ]] && source "$f"
+done
+
+# If interactive, bind inputrc
+[[ $- == *i* ]] && bind -f "$BASH_CONFIG_DIR/inputrc"

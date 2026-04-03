@@ -1,0 +1,6 @@
+# Custom Functions
+
+# Source all feature files from the local repo
+for f in "$CUSTOM_PATH/bash/fns/"*; do
+  [[ -f "$f" ]] && source "$f"
+done

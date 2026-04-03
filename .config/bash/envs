@@ -1,0 +1,3 @@
+# Custom Environment Variables
+export CUSTOM_PATH="$HOME/repos/dotfiles/custom"
+export PATH="$CUSTOM_PATH/bin:$PATH:$HOME/.local/bin"
